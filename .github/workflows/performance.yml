@@ -16,6 +16,20 @@ jobs:
       - name: Run local k6 test
         uses: grafana/k6-action@v0.2.0
         with:
-          filename: test.js
+          filename: load_testing.js
+          cloud: true
+          token: ${{ secrets.TEST}}
+
+  stress-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run local k6 test
+        uses: grafana/k6-action@v0.2.0
+        with:
+          filename: stress_testing.js
           cloud: true
           token: ${{ secrets.TEST}}
