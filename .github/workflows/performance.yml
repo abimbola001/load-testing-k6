@@ -1,12 +1,22 @@
-k6_load_test:
-  name: k6 Load Test
-  runs-on: ubuntu-latest
+name: k6 Load Test
 
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+on:
+  push:
+    branches:
+      - main
 
-    - name: Run local k6 test
-      uses: grafana/k6-action@v0.2.0
-      with:
-        filename: test.js
+jobs:
+  load-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install k6
+        run: |
+          curl -fsSL https://get.k6.io | sh
+
+      - name: Run k6 load test
+        run: k6 run your_script.js
+
