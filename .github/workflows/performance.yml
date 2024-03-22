@@ -18,5 +18,5 @@ jobs:
           curl -fsSL https://get.k6.io | sh
 
       - name: Run k6 load test
-        run: k6 run your_script.js
+        run: k6 run test.js
 
