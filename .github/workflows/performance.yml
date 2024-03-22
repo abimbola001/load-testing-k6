@@ -1,4 +1,4 @@
-name: k6 Load and stree Test
+name: k6 Load and stress Testing
 on:
   push:
     branches:
