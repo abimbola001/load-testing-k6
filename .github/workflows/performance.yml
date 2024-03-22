@@ -13,10 +13,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install k6
-        run: |
-          curl -fsSL https://get.k6.io | sh
-
-      - name: Run k6 load test
-        run: k6 run test.js
+      - name: Run local k6 test
+        uses: grafana/k6-action@v0.2.0
+        with:
+          filename: test.js
 
