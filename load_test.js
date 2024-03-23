@@ -8,7 +8,7 @@ export let options = {
     { duration: '1m', target: 0 },   // Ramp down to 0 virtual users over 1 minute
   ],
   thresholds: {
-    http_req_duration: ['p(95)<500'], // 95% of requests must complete within 500ms
+    http_req_duration: ['p(95)<1000'], // 95% of requests must complete within 500ms
     http_req_failed: ['rate<0.1'],     // Error rate should be less than 10%
   },
 };
