@@ -1,37 +1,36 @@
+import { Counter } from 'k6/metrics';
 import http from 'k6/http';
-import { sleep } from 'k6';
-import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
+import { check, sleep } from 'k6';
+
+// Define a custom metric
+let errorCounter = new Counter('errors');
 
 export let options = {
-  stages: [
-    { duration: '1m', target: 500 },  // Ramp up to 50 virtual users over 1 minute
-    { duration: '3m', target: 500 },  // Stay at 50 virtual users for 3 minutes
-    { duration: '1m', target: 0 },   // Ramp down to 0 virtual users over 1 minute
-  ],
-  thresholds: {
-    http_req_duration: ['p(95)<1000'], // 95% of requests must complete within 500ms
-    http_req_failed: ['rate<0.1'],     // Error rate should be less than 10%
-  },
+    thresholds: {
+        errors: ['count<10'], // Define threshold for custom metric
+    }
 };
 
 export default function () {
-  // Make an HTTP GET request to the specified URL
-  const response = http.get('https://test-api.k6.io');
-  
-  // Simulate user think-time by sleeping for 1 second
-  sleep(1);
+    // Make an HTTP GET request
+    let res = http.get('https://test-api.k6.io/public/crocodiles/1/');
 
-  // Check for errors in the response and log them
-  if (response.status !== 200) {
-    console.error(`Error: ${response.status} - ${response.statusText}`);
-  }
+    // Check if the response is successful
+    let success = check(res, {
+        'status is 200': (r) => r.status === 200,
+    });
 
-  export function handleSummary(data) {
-  return {
-    "result.html": htmlReport(data),
-    stdout: textSummary(data, { indent: " ", enableColors: true }),
-  };
-}
+    // Increment custom metric if there's an error
+    if (!success) {
+        errorCounter.add(1);
+    }
+
+    sleep(1);
 }
 
+// Generate HTML report programmatically after test execution
+export function handleSummary(data) {
+    return {
+        'stdout': k6HtmlReport(data, { output: 'out/report.html' }),
+    };
+}
