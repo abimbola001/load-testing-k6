@@ -15,7 +15,7 @@ export const options = {
 };
 
 export default function () {
-  http.get("https://test-api.k6.io/public/crocodiles/");
+  http.get("https://test-api.k6.io");
 }
 
 export function handleSummary(data) {
