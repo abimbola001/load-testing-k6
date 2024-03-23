@@ -1,10 +1,8 @@
-name: K6 Load and Stress Test
-
+name: K6 Load Testing
 on:
   push:
     branches:
       - main
-
 jobs:
   load_test:
     runs-on: ubuntu-latest
