@@ -23,6 +23,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: k6-report-load
-          path: report.html
+          path: summary.html
           
   
