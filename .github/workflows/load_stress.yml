@@ -17,12 +17,12 @@ jobs:
         uses: grafana/k6-action@v0.2.0
         with:
           filename: load_test.js
-          flags: --out json=Load_results.json
+          #flags: --out json=Load_results.json
           
       - name: Upload performance test results
         uses: actions/upload-artifact@v3
         with:
           name: k6-report-load
-          path: Load_results.json
+          path: Load_results.html
           
   
