@@ -1,11 +1,11 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
+import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
 export let options = {
   stages: [
-    { duration: '1m', target: 50 },  // Ramp up to 50 virtual users over 1 minute
-    { duration: '3m', target: 50 },  // Stay at 50 virtual users for 3 minutes
+    { duration: '1m', target: 500 },  // Ramp up to 50 virtual users over 1 minute
+    { duration: '3m', target: 500 },  // Stay at 50 virtual users for 3 minutes
     { duration: '1m', target: 0 },   // Ramp down to 0 virtual users over 1 minute
   ],
   thresholds: {
@@ -27,9 +27,11 @@ export default function () {
   }
 
   export function handleSummary(data) {
+  console.log('Finished executing performance tests');
+
   return {
-    "summary.html": htmlReport(data),
+    'stdout': textSummary(data, { indent: ' ', enableColors: true }), // Show the text summary to stdout...
+    'summary.json': JSON.stringify(data), // and a JSON with all the details...
   };
-}
 }
 
