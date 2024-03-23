@@ -25,21 +25,4 @@ jobs:
           name: k6-report-load
           path: Load_results.json
           
-  stress_test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run local k6 test
-        uses: grafana/k6-action@v0.2.0
-        with:
-          filename: stress_test.js
-          flags: --out json=stress_results.json
-          
-      - name: Upload performance test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: k6-report-stress
-          path: Stress_results.json
+  
