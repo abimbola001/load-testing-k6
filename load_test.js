@@ -1,21 +1,28 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
 
-export const options = {
-  // Key configurations for Stress in this section
+export let options = {
   stages: [
-    { duration: '2m', target: 100 }, // traffic ramp-up from 1 to a higher 200 users over 10 minutes.
-    { duration: '1m', target: 100 }, // stay at higher 200 users for 30 minutes
-    { duration: '1m', target: 0 }, // ramp-down to 0 users
+    { duration: '1m', target: 50 },  // Ramp up to 50 virtual users over 1 minute
+    { duration: '3m', target: 50 },  // Stay at 50 virtual users for 3 minutes
+    { duration: '1m', target: 0 },   // Ramp down to 0 virtual users over 1 minute
   ],
+  thresholds: {
+    http_req_duration: ['p(95)<500'], // 95% of requests must complete within 500ms
+    http_req_failed: ['rate<0.1'],     // Error rate should be less than 10%
+  },
 };
 
-export default () => {
-  const urlRes = http.get('https://test-api.k6.io');
+export default function () {
+  // Make an HTTP GET request to the specified URL
+  const response = http.get('https://test-api.k6.io');
+  
+  // Simulate user think-time by sleeping for 1 second
   sleep(1);
-  // MORE STEPS
-  // Here you can have more steps or complex script
-  // Step1
-  // Step2
-  // etc.
-};
+
+  // Check for errors in the response and log them
+  if (response.status !== 200) {
+    console.error(`Error: ${response.status} - ${response.statusText}`);
+  }
+}
+
