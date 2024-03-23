@@ -1,36 +1,20 @@
-import { Counter } from 'k6/metrics';
-import http from 'k6/http';
-import { check, sleep } from 'k6';
+import http from "k6/http";
+import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 
-// Define a custom metric
-let errorCounter = new Counter('errors');
-
-export let options = {
-    thresholds: {
-        errors: ['count<10'], // Define threshold for custom metric
-    }
+export const options = {
+  thresholds: {
+    http_req_duration: ["p(95)<150"],
+  },
+  vus: 10,
+  duration: "10s",
 };
 
 export default function () {
-    // Make an HTTP GET request
-    let res = http.get('https://test-api.k6.io/public/crocodiles/1/');
-
-    // Check if the response is successful
-    let success = check(res, {
-        'status is 200': (r) => r.status === 200,
-    });
-
-    // Increment custom metric if there's an error
-    if (!success) {
-        errorCounter.add(1);
-    }
-
-    sleep(1);
+  http.get("https://test-api.k6.io/public/crocodiles/");
 }
 
-// Generate HTML report programmatically after test execution
 export function handleSummary(data) {
-    return {
-        'stdout': k6HtmlReport(data, { output: 'out/report.html' }),
-    };
+  return {
+    "summary.html": htmlReport(data),
+  };
 }
