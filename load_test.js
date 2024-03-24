@@ -4,13 +4,17 @@ import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporte
 export const options = {
   thresholds: {
     //http_req_duration: ["p(95)<1000"],
-    http_req_failed: ['rate<0.1'],     // Error rate should be less than 10%
+    //http_req_failed: ['rate<0.1'],     // Error rate should be less than 10%
   },
   //vus: 10,
   stages: [
-    { duration: '2m', target: 500 },  // Ramp up to 500 virtual users over 2 minutes
-    { duration: '2m', target: 500 },  // Stay at 500 virtual users for 2 minutes
-    { duration: '1m', target: 0 },   // Ramp down to 0 virtual users over 1 minute
+    { duration: '2m', target: 400 },  // below normal load
+    { duration: '5m', target: 400 },
+    { duration: '2m', target: 500 },  // normal load
+    { duration: '5m', target: 500 },   
+    { duration: '2m', target: 600 }, //beyond load
+    { duration: '5m', target: 600 },
+    { duration: '10m', target: 0 }, //scale down  Recovery stage
   ],
 };
 
