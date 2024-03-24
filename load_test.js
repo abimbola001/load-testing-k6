@@ -8,8 +8,8 @@ export const options = {
   },
   //vus: 10,
   stages: [
-    { duration: '2m', target: 100 },  // Ramp up to 500 virtual users over 2 minute
-    { duration: '2m', target: 100 },  // Stay at 500 virtual users for 2 minutes
+    { duration: '2m', target: 500 },  // Ramp up to 500 virtual users over 2 minute
+    { duration: '2m', target: 500 },  // Stay at 500 virtual users for 2 minutes
     { duration: '1m', target: 0 },   // Ramp down to 0 virtual users over 1 minute
   ],
 };
