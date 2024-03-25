@@ -44,6 +44,6 @@ export function handleSummary(data) {
   };
 
   export function teardown() {
-    console.log("Entering teardown");
-}
+    console.log("Entering teardown")
+};
 }
