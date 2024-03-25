@@ -17,6 +17,20 @@ export const options = {
 export default () => {
   const urlRes = http.get('https://test-api.k6.io');
   sleep(1);
+  // Check response time
+    check(response, {
+        'Search Response Time is within threshold': (res) => res.timings.duration < 12000
+    });
+
+    // Check for errors
+    check(response, {
+        'Search Error Rate is within threshold': (res) => res.status === 200
+    });
+
+    // Measure throughput
+    check(response, {
+        'Search Throughput is within threshold': (response) => response.length > 0
+    });
   // MORE STEPS
   // Here you can have more steps or complex script
   // Step1
