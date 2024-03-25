@@ -1,5 +1,6 @@
 import http from "k6/http";
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
+import { check } from 'k6';
 
 export const options = {
   thresholds: {
@@ -17,7 +18,20 @@ export const options = {
     { duration: '10m', target: 0 }, //scale down  Recovery stage
   ],
 };
+// Check response time
+    check(response, {
+        'Search Response Time is within threshold': (res) => res.timings.duration < 1000
+    });
 
+    // Check for errors
+    check(response, {
+        'Search Error Rate is within threshold': (res) => res.status === 200
+    });
+
+    // Measure throughput
+    check(response, {
+        'Search Throughput is within threshold': (response) => response.length > 0
+    });
 export default function () {
   http.get("https://test-api.k6.io");
 }
