@@ -43,9 +43,11 @@ export function handleSummary(data) {
     "summary.html": htmlReport(data),
   };
 
-  export function teardown(data) {
+  
+}
+
+export function teardown(data) {
   // Perform cleanup tasks here
   console.log("Teardown phase:");
   // Add code to log out users here
-}
 }
