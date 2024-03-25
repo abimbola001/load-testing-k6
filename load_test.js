@@ -42,4 +42,8 @@ export function handleSummary(data) {
   return {
     "summary.html": htmlReport(data),
   };
+
+  export function teardown() {
+    console.log("Entering teardown");
+}
 }
