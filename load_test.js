@@ -18,7 +18,11 @@ export const options = {
     { duration: '10m', target: 0 }, //scale down  Recovery stage
   ],
 };
-// Check response time
+
+export default function () {
+  http.get("https://test-api.k6.io");
+
+  // Check response time
     check(response, {
         'Search Response Time is within threshold': (res) => res.timings.duration < 1000
     });
@@ -32,8 +36,6 @@ export const options = {
     check(response, {
         'Search Throughput is within threshold': (response) => response.length > 0
     });
-export default function () {
-  http.get("https://test-api.k6.io");
 }
 
 export function handleSummary(data) {
