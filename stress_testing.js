@@ -31,6 +31,10 @@ export default () => {
     check(response, {
         'Search Throughput is within threshold': (response) => response.length > 0
     });
+
+  export function teardown() {
+    console.log("Entering teardown");
+}
   // MORE STEPS
   // Here you can have more steps or complex script
   // Step1
