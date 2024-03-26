@@ -7,7 +7,7 @@ export const options = {
     //http_req_duration: ["p(95)<1000"],
     //http_req_failed: ['rate<0.1'],     // Error rate should be less than 10%
   },
-  errorCounter = new Counter('errors');
+  
   stages: [
     { duration: '2m', target: 400 },  // below normal load
     { duration: '5m', target: 400 },
@@ -37,9 +37,7 @@ export default function () {
         'Search Throughput is within threshold': (response) => response.length > 0
     });
 
-   if (!success) {
-        errorCounter.add(1);
-    }
+   
 }
 
 export function handleSummary(data) {
