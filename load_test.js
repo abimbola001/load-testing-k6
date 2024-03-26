@@ -45,7 +45,8 @@ export function handleSummary(data) {
     "summary.html": htmlReport(data),
   };
 
-  
+  // Pause for a short duration to simulate user think time
+    sleep(1);
 }
 
 export function teardown(data) {
