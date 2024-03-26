@@ -1,13 +1,13 @@
 import http from "k6/http";
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { check } from 'k6';
-let errorCounter = new Counter('errors');
+//let errorCounter = new Counter('errors');
 export const options = {
   thresholds: {
     //http_req_duration: ["p(95)<1000"],
     //http_req_failed: ['rate<0.1'],     // Error rate should be less than 10%
   },
-  //vus: 10,
+  errorCounter = new Counter('errors');
   stages: [
     { duration: '2m', target: 400 },  // below normal load
     { duration: '5m', target: 400 },
