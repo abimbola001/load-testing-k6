@@ -1,7 +1,7 @@
 import http from "k6/http";
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { check } from 'k6';
-
+let errorCounter = new Counter('errors');
 export const options = {
   thresholds: {
     //http_req_duration: ["p(95)<1000"],
@@ -36,6 +36,10 @@ export default function () {
     check(response, {
         'Search Throughput is within threshold': (response) => response.length > 0
     });
+
+   if (!success) {
+        errorCounter.add(1);
+    }
 }
 
 export function handleSummary(data) {
