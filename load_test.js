@@ -1,7 +1,7 @@
 import http from "k6/http";
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { check } from 'k6';
-//let errorCounter = new Counter('errors');
+//let errorCounter = new Counter('errorss');
 export const options = {
   thresholds: {
     //http_req_duration: ["p(95)<1000"],
