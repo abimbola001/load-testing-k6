@@ -1,6 +1,6 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
-
+// for Garafa dashboard
 export const options = {
   // Key configurations for Stress in this section
   stages: [
