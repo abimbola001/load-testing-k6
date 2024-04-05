@@ -4,7 +4,7 @@ import { sleep } from 'k6';
 export const options = {
   // Key configurations for Stress in this section
   stages: [
-    { duration: '2m', target: 80 },  // below normal load
+    { duration: '2m', target: 81 },  // below normal load
     { duration: '5m', target: 80 },
     { duration: '2m', target: 90 },  // normal load
     { duration: '5m', target: 90 },   
